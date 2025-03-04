@@ -4,9 +4,11 @@ Beyond 2x is a lightweight and easy-to-use Chrome extension that lets you set cu
 
 ## 📸 Screenshots
 ![image](https://github.com/user-attachments/assets/5def1d52-022a-4d2d-a29b-5958be075bf1)
+
 *screenshot of the ui*
 
 ![image](https://github.com/user-attachments/assets/2e92db66-07fd-412d-92f2-da5a5c355e18)
+
 *Changing the speed of video using the slider*
 
 ## 🔧 How to Set It Up
