@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond 2x: YT Speed Booster</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #ff0000;
+            --primary-dark: #cc0000;
+            --primary-light: #ffebeb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6e6e6e;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9f9f9;
+            --border-radius: 12px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --transition: all 0.2s ease;
+        }
+        
+        body {
+            width: 320px;
+            height: 380px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        /* Main container */
+        .extension-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-primary);
+
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Header styles */
+        .header {
+            background: var(--primary);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255,0,0,0) 0%, rgba(255,0,0,0.8) 100%);
+            z-index: 1;
+        }
+        
+        .header-title {
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.01em;
+            z-index: 2;
+        }
+        
+        /* YouTube icon */
+        .youtube-icon {
+            margin-right: 12px;
+            width: 24px;
+            height: 24px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='white' viewBox='0 0 24 24'%3E%3Cpath d='M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 2;
+        }
+        
+        /* Main content */
+        .content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Speed display */
+        .speed-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .current-speed {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            line-height: 1;
+            position: relative;
+        }
+        
+        .current-speed::after {
+            content: 'Current Speed';
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        
+        /* Range slider */
+        .slider-container {
+            margin-bottom: 24px;
+        }
+        
+        .range-slider {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 10px;
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .range-slider::-webkit-slider-thumb:hover {
+            box-shadow: 0 0 0 6px rgba(255, 0, 0, 0.2);
+        }
+        
+        /* Range labels */
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+        }
+        
+        .text-muted {
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Button group */
+        .presets-label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        /* Speed buttons */
+        .speed-btn {
+            padding: 8px 0;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .speed-btn:hover {
+            transform: translateY(-2px);
+            background-color: #f0f0f0;
+        }
+        
+        .speed-btn.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 8px rgba(255, 0, 0, 0.25);
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 12px;
+            font-size: 13px;
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .footer a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            color: var(--primary);
+        }
+        
+        /* GitHub icon */
+        .github-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="extension-container">
+        <div class="header">
+            <span class="youtube-icon"></span>
+            <span class="header-title">Beyond 2x: YT Speed Booster</span>
+        </div>
+        <div class="content">
+            <div class="speed-display">
+                <div class="current-speed" id="speedValue">1.00x</div>
+            </div>
+            
+            <div class="slider-container">
+                <input type="range" class="range-slider" min="0.1" max="10.00" step="0.05" value="1" id="setSpeed">
+                <div class="range-labels">
+                    <small class="text-muted">0.1x</small>
+                    <small class="text-muted">10x</small>
+                </div>
+            </div>
+            
+            <div class="presets-label">Speed Presets</div>
+            <div class="button-group">
+                <button class="speed-btn" data-speed="1">1x</button>
+                <button class="speed-btn" data-speed="1.5">1.5x</button>
+                <button class="speed-btn" data-speed="2">2x</button>
+                <button class="speed-btn" data-speed="5">5x</button>
+                <button class="speed-btn" data-speed="10">10x</button>
+            </div>
+        </div>
+        <div class="footer">
+            <a href="https://github.com/siddiqui-ayan/beyond-2x" target="_blank">
+                <span class="github-icon"></span> View on GitHub
+            </a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
